@@ -30,7 +30,6 @@ def main():
 
     request = youtube.channels().list(
         part="snippet,contentDetails,statistics",
-        fields="items/id,playlistItems/snippet/title,playlistItems/snippet/position",
         forUsername="Fancy Vlogs By Gab"
     )
     response = request.execute()
