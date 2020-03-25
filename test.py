@@ -1,20 +1,11 @@
-# -*- coding: utf-8 -*-
-
-# Sample Python code for youtube.channels.list
-# See instructions for running these code samples locally:
-# https://developers.google.com/explorer-help/guides/code_samples#python
-
 import os
-
+import json
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
 import googleapiclient.errors
-
 scopes = ["https://www.googleapis.com/auth/youtube.readonly"]
 
 def main():
-    # Disable OAuthlib's HTTPS verification when running locally.
-    # *DO NOT* leave this option enabled in production.
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
     api_service_name = "youtube"
@@ -30,11 +21,23 @@ def main():
 
     request = youtube.channels().list(
         part="snippet,contentDetails,statistics",
-        forUsername="Fancy Vlogs By Gab"
+        id="UCLGe0PxyRFWmXVGJKq_gGvw"
     )
-    response = request.execute()
-
+    global response
+    response= request.execute()
     print(response)
+
 
 if __name__ == "__main__":
     main()
+
+def getInformation():
+    response_json = json.dumps(response)
+    title = json.loads(response_json)["items"][0]["snippet"]["title"]
+    subCount = json.loads(response_json)["items"][0]["statistics"]["subscriberCount"]
+    viewcount = json.loads(response_json)["items"][0]["statistics"]["viewCount"]
+    print("Channel: " + title)
+    print("Subcribers: " + subCount)
+    print("Views: " + viewcount)
+
+getInformation()
