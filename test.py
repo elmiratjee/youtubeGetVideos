@@ -23,9 +23,20 @@ def main():
         part="snippet,contentDetails,statistics",
         id="UCLGe0PxyRFWmXVGJKq_gGvw"
     )
+
+    requestPlayList = youtube.playlistItems().list(
+        part="snippet,contentDetails",
+        maxResults=50,
+        playlistId="UULGe0PxyRFWmXVGJKq_gGvw"
+
+    )
     global response
-    response= request.execute()
+    response = request.execute()
     print(response)
+
+    global responsePlaylist
+    responsePlaylist = requestPlayList.execute()
+    print(responsePlaylist)
 
 
 if __name__ == "__main__":
@@ -41,3 +52,14 @@ def getInformation():
     print("Views: " + viewcount)
 
 getInformation()
+
+def getVideos():
+    responsePlaylist_json = json.dumps(responsePlaylist)
+    videoCount = json.loads(responsePlaylist_json)["pageInfo"]["totalResults"]
+    videoCountString = str(videoCount)
+    print("Amount of videos: " + videoCountString)
+
+    for video in json.loads(responsePlaylist_json)["items"]:
+        print("Name of the video:   " + video["snippet"]["title"] + "    \n  Uploaded at:   " + video['snippet']['publishedAt'])
+
+getVideos()
