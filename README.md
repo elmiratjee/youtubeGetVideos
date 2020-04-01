@@ -1,10 +1,10 @@
 # youtubeGetVideos
-#[YoutubeGetVideos](https://github.com/elmiratjee/youtubeGetVideos/blob/master/test.py "Code")
+# [YoutubeGetVideos](https://github.com/elmiratjee/youtubeGetVideos/blob/master/test.py "Code")
 In this file you can see my code. In this code a few things are happening:
 * Getting information by user id
 * Getting videos by playlist id 
 
-##Getting information by user id
+## Getting information by user id
 As you can see in the following code, you can add an id. This id is the user id from a channel from Youtube. 
 ```python
     request = youtube.channels().list(
