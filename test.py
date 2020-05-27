@@ -3,6 +3,8 @@ import json
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
 import googleapiclient.errors
+import pandas
+
 scopes = ["https://www.googleapis.com/auth/youtube.readonly"]
 
 def main():
@@ -38,7 +40,6 @@ def main():
     responsePlaylist = requestPlayList.execute()
     print(responsePlaylist)
 
-
 if __name__ == "__main__":
     main()
 
@@ -54,6 +55,7 @@ def getInformation():
 getInformation()
 
 def getVideos():
+    global responsePlaylist_json
     responsePlaylist_json = json.dumps(responsePlaylist)
     videoCount = json.loads(responsePlaylist_json)["pageInfo"]["totalResults"]
     videoCountString = str(videoCount)
@@ -63,3 +65,14 @@ def getVideos():
         print("Name of the video:   " + video["snippet"]["title"] + "    \n  Uploaded at:   " + video['snippet']['publishedAt'])
 
 getVideos()
+
+def toCSV():
+    global responsePlaylist_json
+    data = json.loads(responsePlaylist_json)
+    df = pandas.DataFrame()
+    for i in range(50):
+        df = df.append(pandas.json_normalize(data["items"][i]["contentDetails"]),ignore_index= True)
+    df.to_csv('D:/Programming projecten/Youtube/dataset.csv', index=None)
+
+toCSV()
+
