@@ -9,7 +9,7 @@ from matplotlib import style
 
 
 
-data = pd.read_csv("dataset.csv", sep=";")
+data = pd.read_csv("dataset2.csv", sep=";")
 data = data[["Index", "videoPublishedAt"]]
 data2 = data[["Index", "videoPublishedAt"]]
 
@@ -37,7 +37,7 @@ model.compile(loss='mean_squared_error',
               optimizer=opt,
               metrics=['mean_absolute_error', 'mean_squared_error'])
 
-model.fit(Index, datums, epochs=500)
+model.fit(Index, datums, epochs=50000)
 
 model.predict([50])
 endResult = model.predict([50])
@@ -50,9 +50,3 @@ print(endResult)
 endResultDatum = dt.datetime.fromordinal(endResult)
 print("Eind resultaat " + str(endResultDatum))
 
-# p1 = Index
-# style.use("ggplot")
-# pyplot.scatter(data[p1], data[datums])
-# pyplot.xlabel(p1)
-# pyplot.ylabel("test")
-# pyplot.show()
